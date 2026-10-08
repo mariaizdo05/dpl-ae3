@@ -82,3 +82,32 @@ identify /var/www/images.alumno.local/img/image01.jpg
 ```
 
 Las imágenes no se versionan porque son contenido de prueba generado automáticamente. En la entrega solo se conserva el comando necesario para reproducirlas.
+
+## Configuración de nginx
+
+El sitio utiliza `images.alumno.local` como nombre principal.
+
+Se definieron listas blancas mediante `map` para controlar los valores recibidos en los parámetros `size` y `sharpen`. Si el cliente envía un valor no permitido se utiliza el valor por defecto.
+
+El sitio HTTP redirige mediante código 301 a HTTPS y `www.images.alumno.local` redirige al nombre principal.
+
+La galería se sirve desde:
+
+```text
+/var/www/images.alumno.local
+```
+
+El procesado mediante `image_filter` se aplica únicamente dentro de `location /img/`.
+
+Las imágenes están protegidas mediante autenticación HTTP básica. El fichero de usuarios se encuentra fuera del DocumentRoot:
+
+```text
+/etc/nginx/images-users
+```
+
+Se utilizan logs propios para el sitio:
+
+```text
+/var/log/nginx/images-alumno.access.log
+/var/log/nginx/images-alumno.error.log
+```
