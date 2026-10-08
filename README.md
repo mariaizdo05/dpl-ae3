@@ -24,3 +24,21 @@ También se verificó la configuración general con:
 ```bash
 nginx -t
 ```
+
+## Certificado HTTPS
+
+Para servir la galería mediante HTTPS se generó un certificado autofirmado con OpenSSL.
+
+Los archivos utilizados por nginx se encuentran dentro del contenedor:
+
+```text
+/etc/ssl/dpl/images.alumno.local.crt
+/etc/ssl/dpl/images.alumno.local.key
+```
+
+El certificado incluye SAN para:
+
+- `images.alumno.local`
+- `www.images.alumno.local`
+
+La clave privada no forma parte del repositorio. Únicamente se incluye una copia del certificado público en `certs/`.
