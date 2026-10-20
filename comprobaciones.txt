@@ -1,0 +1,117 @@
+AE3 - COMPROBACIONES
+====================
+
+1. CONFIGURACION DE NGINX
+=========================
+
+$ docker exec dpl-lab nginx -t
+nginx: the configuration file /etc/nginx/nginx.conf syntax is ok
+nginx: configuration file /etc/nginx/nginx.conf test is successful
+
+$ docker exec dpl-lab nginx -T | grep -E "server_name|image_filter|auth_basic|load_module"
+	# server_names_hash_bucket_size 64;
+	# server_name_in_redirect off;
+load_module modules/ngx_http_image_filter_module.so;
+    server_name images.alumno.local;
+    server_name www.images.alumno.local;
+    server_name www.images.alumno.local;
+    server_name images.alumno.local;
+        auth_basic "Galeria protegida";
+        auth_basic_user_file /etc/nginx/images-users;
+        image_filter_buffer 10M;
+        image_filter resize $image_size $image_size;
+        image_filter_sharpen $image_sharpen;
+    server_name _;
+    server_name _;
+
+2. HTTPS Y PAGINA PRINCIPAL
+===========================
+
+$ curl HTTPS principal
+HTTP/1.1 200 OK
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 20 Oct 2026 19:48:55 GMT
+Content-Type: text/html
+Content-Length: 2188
+Last-Modified: Thu, 08 Oct 2026 21:03:45 GMT
+Connection: keep-alive
+ETag: "6ac80531-88c"
+Accept-Ranges: bytes
+
+
+3. AUTENTICACION
+================
+
+$ /img sin credenciales
+HTTP/1.1 401 Unauthorized
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 20 Oct 2026 19:48:55 GMT
+Content-Type: text/html
+Content-Length: 188
+Connection: keep-alive
+WWW-Authenticate: Basic realm="Galeria protegida"
+
+
+$ /img con credenciales
+HTTP 200
+
+4. PROCESADO DE IMAGENES
+========================
+
+$ identify /tmp/ae3.jpg
+/tmp/ae3.jpg JPEG 150x150 150x150+0+0 8-bit sRGB 4216B 0.000u 0:00.000
+
+5. LISTA BLANCA
+===============
+
+$ size=999 debe utilizar el valor por defecto
+/tmp/ae3-default.jpg JPEG 300x300 300x300+0+0 8-bit sRGB 12254B 0.000u 0:00.000
+
+6. REDIRECCIONES
+================
+
+$ www.images.alumno.local -> images.alumno.local
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 20 Oct 2026 19:48:56 GMT
+Content-Type: text/html
+Content-Length: 178
+Connection: keep-alive
+Location: https://images.alumno.local/
+
+
+$ HTTP -> HTTPS
+HTTP/1.1 301 Moved Permanently
+Server: nginx/1.24.0 (Ubuntu)
+Date: Tue, 20 Oct 2026 19:48:56 GMT
+Content-Type: text/html
+Content-Length: 178
+Connection: keep-alive
+Location: https://images.alumno.local/
+
+
+7. GOACCESS
+===========
+
+$ goaccess images-alumno.access.log
+ [PARSING /var/log/nginx/images-alumno.access.log] {0} @ {0/s}
+Cleaning up resources...
+
+$ head -c 400 /tmp/ae3.json
+{"general": {"start_date": "08/Oct/2026","end_date": "20/Oct/2026","date_time": "2026-10-20 19:48:56 +0000","total_requests": 22,"valid_requests": 22,"failed_requests": 0,"generation_time": 1,"unique_visitors": 2,"unique_files": 5,"excluded_hits": 0,"unique_referrers": 0,"unique_not_found": 0,"unique_static_files": 1,"log_size": 2351,"bandwidth": 81232,"log_path": ["\/var\/log\/nginx\/images-alumn
+
+8. GIT
+======
+
+$ git log --oneline
+9c68fcf Completa aplicacion de la galeria
+ec11749 Corrige autenticacion de la galeria
+3277578 Configura nginx para la galería segura
+b982803 Documenta la generación de las imágenes
+8cf2c4f Añade el certificado HTTPS de la galería
+13fdbfd Prepara las herramientas de la galería
+a43c98e Inicializa la estructura de la AE3
+
+$ git log --format='%an <%ae>' | sort -u
+María Izquierdo Hernández <mariaizquierdohdez05@gmail.com>
+
