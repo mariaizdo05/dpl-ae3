@@ -1,0 +1,68 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f4f4;
+    color: #222;
+}
+
+header {
+    text-align: center;
+    padding: 30px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #dddddd;
+}
+
+header h1 {
+    margin-bottom: 5px;
+}
+
+main {
+    width: 90%;
+    max-width: 1200px;
+    margin: 30px auto;
+}
+
+.controles {
+    background: white;
+    padding: 20px;
+    margin-bottom: 30px;
+    border-radius: 8px;
+}
+
+form {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+}
+
+label {
+    font-weight: bold;
+}
+
+select,
+input,
+button {
+    padding: 8px;
+}
+
+button {
+    cursor: pointer;
+}
+
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+    align-items: start;
+}
+
+.galeria img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}

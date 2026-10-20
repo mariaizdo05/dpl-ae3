@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Galería de imágenes - AE3</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Galería de imágenes</h1>
+        <p>Procesado de imágenes con nginx</p>
+    </header>
+
+    <main>
+        <section class="controles">
+            <h2>Opciones de procesado</h2>
+
+            <form id="formulario">
+                <label for="size">Tamaño:</label>
+                <select id="size">
+                    <option value="150">150 x 150</option>
+                    <option value="300" selected>300 x 300</option>
+                    <option value="450">450 x 450</option>
+                    <option value="600">600 x 600</option>
+                </select>
+
+                <label for="borderWidth">Ancho del borde:</label>
+                <input
+                    type="number"
+                    id="borderWidth"
+                    value="2"
+                    min="0"
+                    max="20"
+                >
+
+                <label for="borderColor">Color del borde:</label>
+                <input
+                    type="color"
+                    id="borderColor"
+                    value="#333333"
+                >
+
+                <label for="sharpen">Enfoque:</label>
+                <select id="sharpen">
+                    <option value="0" selected>0</option>
+                    <option value="10">10</option>
+                    <option value="30">30</option>
+                    <option value="50">50</option>
+                </select>
+
+                <label for="blur">Desenfoque:</label>
+                <input
+                    type="number"
+                    id="blur"
+                    value="0"
+                    min="0"
+                    max="10"
+                >
+
+                <button type="submit">Generar</button>
+            </form>
+        </section>
+
+        <section>
+            <h2>Imágenes</h2>
+            <div id="galeria" class="galeria"></div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
