@@ -324,4 +324,6 @@ flowchart TD
 
 ## Repositorio remoto
 
-El enlace al repositorio remoto se añadirá una vez creado y configurado el repositorio.
+El microproyecto está disponible en:
+
+https://github.com/mariaizdo05/dpl-ae3
